@@ -1,0 +1,30 @@
+{
+  "schema": "dosuite.skill-resources.v1",
+  "product": "DoEmail",
+  "updatedAt": "2026-07-07",
+  "status": "gitops-ready-requires-runtime-verification",
+  "defaultDoopsTarget": {
+    "name": "gw-oilan-node",
+    "cluster": "doops-oilan",
+    "instance": "oilan-node"
+  },
+  "runtime": {
+    "id": "mail-l8ai",
+    "domain": "l8ai.cn",
+    "mailHostname": "mail.l8ai.cn",
+    "publicIp": "89.250.81.244",
+    "namespace": "mail",
+    "deployment": "l8ai-mail",
+    "image": "docker.io/mailserver/docker-mailserver:v15.1.0",
+    "ports": [25, 587, 993],
+    "postmaster": "postmaster@l8ai.cn",
+    "gitopsBase": "DoSuite/DoEmail/Server/gitops/base",
+    "requiresVerification": ["A", "MX", "SPF", "DKIM", "DMARC", "rDNS", "pod", "pvc", "smtp", "imaps"]
+  },
+  "credentialPolicy": "No mailbox passwords are stored here. Use k8s Secret refs such as k8s://mail/secret/<mailbox>/password.",
+  "quickPrompts": [
+    "Generate the DNS connection plan for l8ai.cn and mail.l8ai.cn, then list the exact records and verification commands.",
+    "Create a read-only Kubernetes inspection plan for namespace mail deployment l8ai-mail.",
+    "Generate a developer integration guide for l8ai.cn covering Java, Python, Node.js and Kubernetes clients."
+  ]
+}

@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: l8ai-mail
+  labels:
+    app.kubernetes.io/name: doemail
+    app.kubernetes.io/component: mail-runtime
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: doemail
+      app.kubernetes.io/component: mail-runtime
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: doemail
+        app.kubernetes.io/component: mail-runtime
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: mailserver
+          image: docker.io/mailserver/docker-mailserver:v15.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: smtp
+              containerPort: 25
+              protocol: TCP
+            - name: submission
+              containerPort: 587
+              protocol: TCP
+            - name: imaps
+              containerPort: 993
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: l8ai-mail-config
+            - secretRef:
+                name: l8ai-mail-secrets
+          volumeMounts:
+            - name: mail-data
+              mountPath: /var/mail
+            - name: mail-state
+              mountPath: /var/mail-state
+            - name: mail-config
+              mountPath: /tmp/docker-mailserver
+          readinessProbe:
+            tcpSocket:
+              port: imaps
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: smtp
+            initialDelaySeconds: 60
+            periodSeconds: 20
+      volumes:
+        - name: mail-data
+          persistentVolumeClaim:
+            claimName: l8ai-mail-data
+        - name: mail-state
+          persistentVolumeClaim:
+            claimName: l8ai-mail-state
+        - name: mail-config
+          persistentVolumeClaim:
+            claimName: l8ai-mail-config

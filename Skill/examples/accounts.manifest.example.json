@@ -1,0 +1,32 @@
+{
+  "kind": "DoEmailAccountManifest",
+  "apiVersion": "doemail.l8ai.cn/v1",
+  "domainId": "dom_l8ai",
+  "environmentId": "prod",
+  "domain": "l8ai.cn",
+  "accounts": [
+    {
+      "mailbox": "admin@l8ai.cn",
+      "role": "admin",
+      "status": "active",
+      "displayName": "DoEmail Administrator",
+      "passwordSecretRef": "k8s://mail/secret/admin/password",
+      "quota": "2G"
+    },
+    {
+      "mailbox": "service@l8ai.cn",
+      "role": "service",
+      "status": "active",
+      "displayName": "Application Mail Sender",
+      "passwordSecretRef": "k8s://mail/secret/service/password",
+      "quota": "1G"
+    },
+    {
+      "mailbox": "old.user@l8ai.cn",
+      "role": "user",
+      "status": "disabled",
+      "displayName": "Disabled User Example",
+      "passwordSecretRef": "k8s://mail/secret/old-user/password"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mail
+  labels:
+    app.kubernetes.io/name: doemail
+    app.kubernetes.io/component: mail-runtime
