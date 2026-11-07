@@ -1,0 +1,6 @@
+apiVersion: v2
+name: l8ai-mail-oilan
+description: Restore the existing l8ai.cn receiving mailboxes on the current Oilan cluster
+type: application
+version: 0.1.0
+appVersion: "15.1.0"

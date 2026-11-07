@@ -2,6 +2,11 @@
 
 This package deploys one Kubernetes `docker-mailserver` runtime for DoEmail.
 
+The current Oilan recovery uses the environment-specific Helm chart in
+[`oilan/`](oilan/README.md), namespace `oilan`, with the existing mailboxes and
+passwords. The removed K3s runtime described by the original `mail` base is no
+longer the live deployment.
+
 See `../docs/gitops-deployment.md` for the full deployment workflow, overlay
 guidance, apply gate, verification and rollback notes.
 
