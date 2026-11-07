@@ -42,14 +42,16 @@ old storage or archives intact while continuing the historical-data search.
 
 ## Release and verification
 
-Render and lint this chart, commit and push it, then push this directory into
-the DoOps session workspace. Create the account Secret with the preparation
-script before starting the workload. Deploy through `doops ask --apply`, naming
-this workspace chart, target, release, namespace, image digest and acceptance
+Render and lint this chart, commit and push it, then use `doops push` with
+`Server/gitops` as the source directory. The session workspace must contain the
+named child directory `oilan/`; the managed Helm tool rejects `chart='.'`.
+Create the account Secret with `oilan/prepare_accounts.py` before starting the
+workload. Deploy through `doops ask --apply`, naming `asset_source=workspace`,
+`chart=oilan`, target, release, namespace, image digest and acceptance
 conditions. The managed Helm tool must run its server dry-run and return a
 verified rollout; shell `kubectl apply` is not the workload release path.
 
-Run `verify_mail.py` from the same session directory after rollout. It verifies
+Run `oilan/verify_mail.py` from the same session directory after rollout. It verifies
 both original passwords over IMAPS, sends one tagged internal message to each
 managed mailbox through public SMTP with STARTTLS, verifies those exact messages
 in INBOX, rejects incorrect passwords and checks that unauthenticated external
