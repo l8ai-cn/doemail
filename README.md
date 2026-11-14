@@ -47,7 +47,7 @@ DoEmail/
 | 发信 SMTP | `mail.oilan.ai` | 587 | STARTTLS |
 | 发信 SMTP | `mail.oilan.ai` | 465 | SSL/TLS |
 
-当前证书是自签名证书，第一次添加账户时要信任该邮件主机。
+使用已经部署在服务器上的正式证书。
 
 ### 客户端里怎么填
 

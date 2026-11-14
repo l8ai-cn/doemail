@@ -73,7 +73,7 @@ export const SITES = {
     release: "oilan-ai-mail",
     doopsTarget: "oilan",
     accountsPath: "sites/oilan/accounts.json",
-    tls: "self-signed",
+    tls: "deployed-certificate",
   },
 };
 

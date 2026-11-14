@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>oilan.ai 邮箱用户手册</title>
+<style>
+  @page { size: A4; margin: 16mm 16mm 18mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: #1d1d1f;
+    font-family: "PingFang SC", "Songti SC", "Heiti SC", sans-serif;
+    font-size: 12.5pt;
+    line-height: 1.55;
+  }
+  h1 { font-size: 26pt; line-height: 1.25; margin: 0 0 8px; }
+  h2 { font-size: 16pt; margin: 22px 0 8px; page-break-after: avoid; }
+  p { margin: 0 0 10px; }
+  ol, ul { margin: 0 0 12px; padding-left: 1.3em; }
+  li { margin: 0 0 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; page-break-inside: avoid; }
+  th, td { border: 1px solid #d7dde5; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background: #f4f6f8; font-weight: 600; }
+  code { font-family: "SF Mono", Menlo, monospace; font-size: 0.92em; }
+  figure { margin: 10px 0 16px; page-break-inside: avoid; }
+  img { width: 100%; height: auto; border: 1px solid #e3e8ee; border-radius: 10px; }
+  img.shot { width: 72%; display: block; margin: 0 auto; }
+  figcaption { color: #5c6570; font-size: 10.5pt; margin-top: 6px; }
+  .lead { color: #3a424c; }
+  .note { background: #f7f9fb; border-left: 4px solid #1473e6; padding: 8px 12px; margin: 10px 0 14px; }
+</style>
+</head>
+<body>
+<h1>oilan.ai 邮箱用户手册</h1>
+<p class="lead">这份手册给使用 @oilan.ai 邮箱的人。管理员把邮箱地址和密码单独发给你之后，按下面的步骤在自己的电脑或手机上添加账户。</p>
+<p>用户名一律填完整邮箱地址，例如 <code>name@oilan.ai</code>。不要只填姓名。</p>
+
+<h2>服务器设置</h2>
+<p>Outlook、Mac 系统“邮件”、iPhone 邮件、Thunderbird、Foxmail、QQ 邮箱和网易邮箱大师都用这一套。不需要专有协议。</p>
+<figure>
+  <img src="images/00-server-settings.png" alt="所有客户端都用这一套服务器设置">
+  <figcaption>图 1　收信和发信使用同一个主机。</figcaption>
+</figure>
+<p>服务器使用 <code>*.oilan.ai</code> 正式证书。第一次添加时，系统如果询问是否信任，确认证书名称是 <code>*.oilan.ai</code> 后再继续。</p>
+
+<h2>在 Mac 系统“邮件”里添加</h2>
+<figure>
+  <img class="shot" src="images/01-mac-add-account.png" alt="Mac 系统邮件的添加账户窗口">
+  <figcaption>图 2　Mac 系统“邮件”的实机界面。地址框填完整邮箱，不要选列表里的公共邮箱服务。列表再往下是“其他邮件账户”。</figcaption>
+</figure>
+<ol>
+  <li>打开“邮件”。</li>
+  <li>点左上角菜单栏的“邮件”，选择“添加账户…”。</li>
+  <li>在“输入电子邮件地址”里填完整邮箱，例如 <code>name@oilan.ai</code>。</li>
+  <li>不要选 iCloud、Exchange、Google、Yahoo、AOL、163、126 或 QQ 邮箱。列表往下找到“其他邮件账户”。</li>
+  <li>名称填你的显示名。电子邮件地址和用户名都填完整邮箱。密码填管理员发给你的密码。</li>
+  <li>账户类型选 IMAP。收件服务器和发件服务器都填 <code>mail.oilan.ai</code>。系统窗口里如果还写着 <code>mail.example.com</code>，必须改掉。</li>
+  <li>点“登录”。账户出现在左侧边栏后，就可以收信和发信。</li>
+</ol>
+<figure>
+  <img src="images/02-fill-fields.png" alt="手动填写邮箱、用户名、密码和服务器">
+  <figcaption>图 3　进入“其他邮件账户”后，按这五项填写。</figcaption>
+</figure>
+<div class="note">
+  <p>如果窗口提示“无法验证账户名或密码”，先核对这三处：</p>
+  <ul>
+    <li>用户名是完整邮箱，不是姓名。</li>
+    <li>收件服务器和发件服务器都是 <code>mail.oilan.ai</code>。</li>
+    <li>密码与管理员发给你的一致，没有多余空格。</li>
+  </ul>
+</div>
+
+<h2>在 iPhone 或 iPad 上添加</h2>
+<ol>
+  <li>打开“设置”，进入“邮件”，再进入“账户”。</li>
+  <li>点“添加账户”，选择“其他”，再点“添加邮件账户”。</li>
+  <li>名称、电子邮件、密码、描述按自己的信息填写。电子邮件填完整地址。</li>
+  <li>下一步选 IMAP。</li>
+  <li>收件服务器主机名填 <code>mail.oilan.ai</code>，用户名填完整邮箱，密码再填一次。</li>
+  <li>发件服务器主机名同样填 <code>mail.oilan.ai</code>，用户名和密码也填完整邮箱和同一组密码。</li>
+  <li>存储点“邮件”，然后点“存储”。</li>
+</ol>
+
+<h2>在 Outlook 里添加</h2>
+<ol>
+  <li>打开 Outlook，选择“文件”，再选“添加账户”。</li>
+  <li>点“高级设置”，选择 IMAP。</li>
+  <li>收件服务器 <code>mail.oilan.ai</code>，端口 993，加密 SSL/TLS。</li>
+  <li>发件服务器 <code>mail.oilan.ai</code>，端口 587，加密 STARTTLS。也可以改用 465 和 SSL/TLS。</li>
+  <li>用户名填完整邮箱地址。</li>
+</ol>
+
+<h2>在其他常用邮箱软件里添加</h2>
+<p>Foxmail：选择“其他邮箱”，再选“手动设置”。收件服务器选 IMAP，发件服务器选 SMTP，主机、端口和加密按上面的表填写。</p>
+<p>QQ 邮箱：选择“添加其他邮箱”，协议选 IMAP。不要用 QQ 账号登录这个邮箱。服务器填 <code>mail.oilan.ai</code>。</p>
+<p>网易邮箱大师：选择“添加其他邮箱”，再选 IMAP。收信使用 993 和 SSL/TLS，发信使用 587 和 STARTTLS，或 465 和 SSL/TLS。</p>
+<p>Thunderbird：新建账户时选择“手动配置”。IMAP 使用 993 和 SSL/TLS，SMTP 使用 587 和 STARTTLS。用户名填完整邮箱地址。</p>
+
+<h2>收信和发信</h2>
+<p>收信走 IMAP。邮件保留在服务器上，手机和电脑看到的是同一封信。</p>
+<p>发信必须登录。发件人要和登录的邮箱一致。新邮件写完后点发送。对方如果收不到，先看自己的发件箱或垃圾邮件，再把退信原文交给管理员。</p>
+<p>写给 <code>support@oilan.ai</code> 的信会留在 support 邮箱，并同时出现在已登记的同事邮箱里。这是服务器上的抄送，不需要发信人再逐个添加收件人。</p>
+
+<h2>遇到问题时</h2>
+<table>
+  <tr><th>现象</th><th>处理</th></tr>
+  <tr><td>提示密码错误</td><td>用户名改成完整邮箱，再重新输入密码。</td></tr>
+  <tr><td>服务器仍是 mail.example.com</td><td>收件和发件都改成 mail.oilan.ai。</td></tr>
+  <tr><td>选成了 QQ、163 或 iCloud</td><td>返回，改选“其他邮件账户”。</td></tr>
+  <tr><td>能收信但不能发信</td><td>发件端口用 587 和 STARTTLS，或 465 和 SSL/TLS，并打开 SMTP 登录验证。</td></tr>
+  <tr><td>证书提示</td><td>确认名称是 *.oilan.ai 后再信任。</td></tr>
+</table>
+</body>
+</html>
