@@ -1,0 +1,3 @@
+plugin {
+  sieve_max_redirects = 10
+}

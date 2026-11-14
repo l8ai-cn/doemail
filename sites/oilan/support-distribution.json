@@ -1,0 +1,14 @@
+{
+  "schema": "doemail.support-distribution.v1",
+  "mailbox": "support@oilan.ai",
+  "keepInMailbox": true,
+  "copyTo": [
+    "baurzhan.nurahan@oilan.ai",
+    "gulnar.kanat@oilan.ai",
+    "nurzhamal.makulbekova@oilan.ai",
+    "moldabayev.alisher@oilan.ai",
+    "yermek.abilgaziyev@oilan.ai",
+    "info@oilan.ai",
+    "kuanysh.adil@oilan.ai"
+  ]
+}

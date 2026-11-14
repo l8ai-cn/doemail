@@ -20,6 +20,54 @@
       "role": "service",
       "status": "active",
       "password": "p7EyPXBX5rC9leap7poxNZv-"
+    },
+    {
+      "mailbox": "baurzhan.nurahan@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "baurzhan.nurahan"
+    },
+    {
+      "mailbox": "gulnar.kanat@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "gulnar.kanat"
+    },
+    {
+      "mailbox": "nurzhamal.makulbekova@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "Nurzhamal.makulbekova"
+    },
+    {
+      "mailbox": "moldabayev.alisher@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "Moldabayev.Alisher"
+    },
+    {
+      "mailbox": "yermek.abilgaziyev@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "yermek.abilgaziyev"
+    },
+    {
+      "mailbox": "info@oilan.ai",
+      "role": "shared",
+      "status": "active",
+      "password": "info"
+    },
+    {
+      "mailbox": "kuanysh.adil@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "Kuanysh.Adil"
+    },
+    {
+      "mailbox": "support@oilan.ai",
+      "role": "shared",
+      "status": "active",
+      "password": "support"
     }
   ]
 }
