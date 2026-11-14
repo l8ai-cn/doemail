@@ -1,0 +1,19 @@
+{
+  "schema": "doemail.site-accounts.v1",
+  "site": "l8ai",
+  "domain": "l8ai.cn",
+  "accounts": [
+    {
+      "mailbox": "gjq@l8ai.cn",
+      "role": "user",
+      "status": "active",
+      "password": "zlG7kFCCiz9A3Rpq9fTE/I5G0EkAFH0D"
+    },
+    {
+      "mailbox": "postmaster@l8ai.cn",
+      "role": "admin",
+      "status": "active",
+      "password": "qab0XbZ1ICxMwausKguGM25iqiHRYdxU"
+    }
+  ]
+}
