@@ -14,6 +14,12 @@
       "role": "admin",
       "status": "active",
       "password": "4RjagE3D-DkRZMEqFFuizrpu"
+    },
+    {
+      "mailbox": "noreply@oilan.ai",
+      "role": "service",
+      "status": "active",
+      "password": "p7EyPXBX5rC9leap7poxNZv-"
     }
   ]
 }
