@@ -1,0 +1,19 @@
+{
+  "schema": "doemail.site-accounts.v1",
+  "site": "oilan",
+  "domain": "oilan.ai",
+  "accounts": [
+    {
+      "mailbox": "contact@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "kGEKUJCiYof93v99o2PyC5WR"
+    },
+    {
+      "mailbox": "postmaster@oilan.ai",
+      "role": "admin",
+      "status": "active",
+      "password": "4RjagE3D-DkRZMEqFFuizrpu"
+    }
+  ]
+}

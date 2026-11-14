@@ -1,0 +1,205 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: oilan-ai-mail-data
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: zhiyong-local-path
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: oilan-ai-mail-state
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: zhiyong-local-path
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: oilan-ai-mail-config
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: zhiyong-local-path
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oilan-ai-mail
+spec:
+  type: ClusterIP
+  externalIPs: ["89.250.81.242"]
+  selector:
+    app.kubernetes.io/name: oilan-ai-mail
+  ports:
+    - name: smtp
+      port: 25
+      targetPort: smtp
+    - name: submission
+      port: 587
+      targetPort: submission
+    - name: smtps
+      port: 465
+      targetPort: smtps
+    - name: imaps
+      port: 993
+      targetPort: imaps
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oilan-ai-mail
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: oilan-ai-mail
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: oilan-ai-mail
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: "192.168.0.26"
+      initContainers:
+        - name: prepare-mail-config
+          image: docker.io/mailserver/docker-mailserver@sha256:af51b15dd3fc72153c0e90eb7692bb5e3a463212d87959a80fa7aa89b617d44a
+          command:
+            - /bin/bash
+            - -ec
+            - |
+              test -s /accounts/postfix-accounts.cf
+              install -m 0600 /accounts/postfix-accounts.cf /config/postfix-accounts.cf
+              install -d -m 0700 /config/ssl /config/opendkim/keys/oilan.ai
+              if [[ ! -s /config/ssl/mail.oilan.ai-key.pem || ! -s /config/ssl/mail.oilan.ai-cert.pem ]]; then
+                openssl req -x509 -nodes -newkey rsa:2048 -days 825 \
+                  -keyout /config/ssl/mail.oilan.ai-key.pem \
+                  -out /config/ssl/mail.oilan.ai-cert.pem \
+                  -subj /CN=mail.oilan.ai \
+                  -addext subjectAltName=DNS:mail.oilan.ai
+                chmod 0600 /config/ssl/mail.oilan.ai-key.pem
+              fi
+              if [[ ! -s /config/opendkim/keys/oilan.ai/mail.private ]]; then
+                opendkim-genkey -b 2048 -d oilan.ai -D /config/opendkim/keys/oilan.ai -s mail
+                chmod 0600 /config/opendkim/keys/oilan.ai/mail.private
+                printf '%s\n' 'mail._domainkey.oilan.ai oilan.ai:mail:/etc/opendkim/keys/oilan.ai/mail.private' > /config/opendkim/KeyTable
+                printf '%s\n' '*@oilan.ai mail._domainkey.oilan.ai' > /config/opendkim/SigningTable
+                printf '%s\n' '127.0.0.1' 'localhost' > /config/opendkim/TrustedHosts
+              fi
+              test -s /config/opendkim/keys/oilan.ai/mail.private
+              test -s /config/opendkim/keys/oilan.ai/mail.txt
+          volumeMounts:
+            - name: accounts
+              mountPath: /accounts
+              readOnly: true
+            - name: mail-config
+              mountPath: /config
+      containers:
+        - name: mailserver
+          image: docker.io/mailserver/docker-mailserver@sha256:af51b15dd3fc72153c0e90eb7692bb5e3a463212d87959a80fa7aa89b617d44a
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: smtp
+              containerPort: 25
+            - name: submission
+              containerPort: 587
+            - name: smtps
+              containerPort: 465
+            - name: imaps
+              containerPort: 993
+          env:
+            - name: OVERRIDE_HOSTNAME
+              value: mail.oilan.ai
+            - name: POSTMASTER_ADDRESS
+              value: postmaster@oilan.ai
+            - name: SSL_TYPE
+              value: manual
+            - name: SSL_CERT_PATH
+              value: /tmp/docker-mailserver/ssl/mail.oilan.ai-cert.pem
+            - name: SSL_KEY_PATH
+              value: /tmp/docker-mailserver/ssl/mail.oilan.ai-key.pem
+            - name: PERMIT_DOCKER
+              value: none
+            - name: NETWORK_INTERFACE
+              value: eth0
+            - name: ONE_DIR
+              value: "1"
+            - name: ENABLE_CLAMAV
+              value: "0"
+            - name: ENABLE_AMAVIS
+              value: "0"
+            - name: ENABLE_SPAMASSASSIN
+              value: "0"
+            - name: ENABLE_RSPAMD
+              value: "0"
+            - name: ENABLE_FAIL2BAN
+              value: "0"
+            - name: ENABLE_POSTGREY
+              value: "0"
+            - name: ENABLE_OPENDKIM
+              value: "1"
+            - name: ENABLE_OPENDMARC
+              value: "0"
+            - name: SPOOF_PROTECTION
+              value: "1"
+            - name: POSTFIX_INET_PROTOCOLS
+              value: ipv4
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          volumeMounts:
+            - name: mail-data
+              mountPath: /var/mail
+            - name: mail-state
+              mountPath: /var/mail-state
+            - name: mail-config
+              mountPath: /tmp/docker-mailserver
+          startupProbe:
+            tcpSocket:
+              port: smtp
+            failureThreshold: 60
+            periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: imaps
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: smtp
+            initialDelaySeconds: 60
+            periodSeconds: 20
+      volumes:
+        - name: accounts
+          secret:
+            secretName: oilan-ai-mail-accounts
+            defaultMode: 0400
+        - name: mail-data
+          persistentVolumeClaim:
+            claimName: oilan-ai-mail-data
+        - name: mail-state
+          persistentVolumeClaim:
+            claimName: oilan-ai-mail-state
+        - name: mail-config
+          persistentVolumeClaim:
+            claimName: oilan-ai-mail-config

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: oilan-ai-mail
+description: Receive oilan.ai mail on 89.250.81.242 without sharing l8ai.cn port 25
+type: application
+version: 0.1.0
+appVersion: "15.1.0"
