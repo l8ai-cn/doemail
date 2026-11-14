@@ -14,6 +14,12 @@ import {
   classifyEmailOperation,
   createEmailOperationRecord,
 } from "../Server/lib/email-policy.mjs";
+import {
+  accountMessage,
+  openAccount,
+  readAccountPassword,
+  requireSite,
+} from "../../Server/lib/site-branches.mjs";
 
 const [, , group, action, ...argv] = process.argv;
 
@@ -49,6 +55,12 @@ function dispatch(groupName, actionName, flags) {
   }
   if (groupName === "k8s" && actionName === "persistence-plan") {
     return createKubernetesPersistencePlan(flags);
+  }
+  if (groupName === "account" && actionName === "open") {
+    return openSiteAccount(flags);
+  }
+  if (groupName === "account" && actionName === "send") {
+    return sendSiteAccount(flags);
   }
   if (groupName === "account" && actionName === "create-plan") {
     return createAccountCreatePlan(flags);
@@ -126,7 +138,7 @@ function dispatch(groupName, actionName, flags) {
     return listLedger(flags);
   }
   throw new Error(
-    "Usage: doemail.mjs intent plan|mail-command, dns plan|evaluate, integration guide, operation record, k8s inspect-plan|persistence-plan, account create-plan|list-plan|bulk-create-plan|reset-password-plan|disable-plan|offboard-plan|manifest-validate|manifest-plan, mail send-plan|receive-test-plan|read-plan, permission alias-plan|quota-plan|shared-mailbox-plan|distribution-group-plan|forwarding-plan, security dkim-plan, diagnose inbound, evidence package, listener create-plan|poll-plan|evaluate|record-result, or ledger append|list",
+    "Usage: doemail.mjs intent plan|mail-command, dns plan|evaluate, integration guide, operation record, k8s inspect-plan|persistence-plan, account open|send|create-plan|list-plan|bulk-create-plan|reset-password-plan|disable-plan|offboard-plan|manifest-validate|manifest-plan, mail send-plan|receive-test-plan|read-plan, permission alias-plan|quota-plan|shared-mailbox-plan|distribution-group-plan|forwarding-plan, security dkim-plan, diagnose inbound, evidence package, listener create-plan|poll-plan|evaluate|record-result, or ledger append|list",
   );
 }
 
@@ -423,6 +435,82 @@ function createKubernetesPersistencePlan(flags) {
       "mail data, state and config paths are mounted",
       "rollout history does not replace PVC-backed data",
     ],
+  };
+}
+
+function openSiteAccount(flags) {
+  const site = requireFlag(flags, "site");
+  const spec = requireSite(site);
+  const opened = openAccount({
+    site,
+    mailbox: requireFlag(flags, "mailbox"),
+    role: flags.role ?? "user",
+    password: flags.password,
+    accountsFile: flags["accounts-file"],
+  });
+  const operation = createEmailOperationRecord({
+    ...operationContext(siteFlags(flags, spec)),
+    operationType: "create_account",
+    target: {
+      site,
+      mailbox: opened.mailbox,
+      accountsFile: spec.accountsPath,
+    },
+  });
+  return {
+    kind: "account_open",
+    site,
+    mailbox: opened.mailbox,
+    role: opened.role,
+    created: opened.created,
+    accountsFile: spec.accountsPath,
+    runtime: opened.runtime,
+    operation,
+    execute: `在 ${spec.doopsTarget} 上从 ${spec.accountsPath} 读取 ${opened.mailbox} 的密码，执行 kubectl -n ${spec.namespace} exec deploy/${spec.deployment} -- setup email add ${opened.mailbox} '<password>'`,
+  };
+}
+
+function sendSiteAccount(flags) {
+  const site = requireFlag(flags, "site");
+  const spec = requireSite(site);
+  const stored = readAccountPassword(
+    site,
+    requireFlag(flags, "mailbox"),
+    flags["accounts-file"],
+  );
+  const to = safeEmail(requireFlag(flags, "to"));
+  const from = `postmaster@${spec.domain}`;
+  const message = createMailCommandPlan({
+    ...siteFlags(flags, spec),
+    intent: "send_mail",
+    from,
+    to,
+    subject: `${stored.mailbox} 的邮箱账户`,
+    body: accountMessage({
+      site,
+      mailbox: stored.mailbox,
+      password: stored.password,
+    }),
+  });
+  return {
+    kind: "account_send",
+    site,
+    mailbox: stored.mailbox,
+    to,
+    message,
+  };
+}
+
+function siteFlags(flags, spec) {
+  return {
+    ...flags,
+    "domain-id": flags["domain-id"] ?? spec.branch,
+    "environment-id": flags["environment-id"] ?? "prod",
+    "actor-type": flags["actor-type"] ?? "user",
+    "actor-id": flags["actor-id"] ?? "maintainer",
+    namespace: flags.namespace ?? spec.namespace,
+    deployment: flags.deployment ?? spec.deployment,
+    environment: flags.environment ?? "prod",
   };
 }
 

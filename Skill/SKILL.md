@@ -35,10 +35,17 @@ to verified mail service state.
 - Use the selected doagent target. Do not operate a mail runtime from a local
   workstation unless that target is the selected target.
 - Treat Kubernetes as the first runtime path.
+- Read `agent.md` and `Server/lib/site-branches.mjs` before maintaining a site.
+  The user connection steps are the “用户如何对接邮箱” section of `README.md`.
+- main stores the Skill and rules. l8ai and oilan branches store that site's
+  mailbox passwords in `sites/<site>/accounts.json`.
+- Open an account with `account open` on the matching branch, then create it in
+  that site's Deployment. Send the address and password with `account send`.
 - Do not store mailbox passwords, API keys, private keys or tokens in operation
-  records.
+  records. A sent account message may contain the password in its body.
 - Do not put plaintext passwords in account manifests. Use `passwordSecretRef`
-  such as `k8s://mail/secret/admin/password`.
+  such as `k8s://mail/secret/admin/password`. Site branch account files are the
+  exception named above.
 - Before claiming a domain is connected, verify DNS records and reverse DNS.
 - Before claiming mail can be sent externally, verify SMTP delivery and reverse
   DNS.

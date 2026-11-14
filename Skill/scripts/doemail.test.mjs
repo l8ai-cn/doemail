@@ -1216,3 +1216,57 @@ test("GitOps base package defines repeatable Kubernetes mail runtime resources",
   assert.match(secret, /MAIL_POSTMASTER_PASSWORD/);
   assert.doesNotMatch(secret, /committed-secret-value|cleartext-password-value/);
 });
+
+test("account open writes the password to the site file and not the plan", () => {
+  const accountsFile = join(mkdtempSync(join(tmpdir(), "doemail-open-")), "accounts.json");
+  const opened = runJson([
+    "account",
+    "open",
+    "--site",
+    "oilan",
+    "--mailbox",
+    "user@oilan.ai",
+    "--password",
+    "branch-secret",
+    "--accounts-file",
+    accountsFile,
+  ]);
+
+  assert.equal(opened.kind, "account_open");
+  assert.equal(opened.operation.operationType, "create_account");
+  assert.equal(JSON.stringify(opened).includes("branch-secret"), false);
+  assert.match(readFileSync(accountsFile, "utf8"), /branch-secret/);
+});
+
+test("account send puts the password in the mail body only", () => {
+  const accountsFile = join(mkdtempSync(join(tmpdir(), "doemail-send-")), "accounts.json");
+  runJson([
+    "account",
+    "open",
+    "--site",
+    "l8ai",
+    "--mailbox",
+    "user@l8ai.cn",
+    "--password",
+    "send-secret",
+    "--accounts-file",
+    accountsFile,
+  ]);
+  const sent = runJson([
+    "account",
+    "send",
+    "--site",
+    "l8ai",
+    "--mailbox",
+    "user@l8ai.cn",
+    "--to",
+    "owner@example.com",
+    "--accounts-file",
+    accountsFile,
+  ]);
+
+  assert.equal(sent.kind, "account_send");
+  assert.equal(sent.message.send.operation.target.password, undefined);
+  assert.match(sent.message.send.runtimeCommands.join("\n"), /密码：send-secret/);
+  assert.match(sent.message.send.runtimeCommands.join("\n"), /mail\.l8ai\.cn/);
+});

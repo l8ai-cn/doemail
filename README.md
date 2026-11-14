@@ -25,6 +25,41 @@ DoEmail/
 └─ Skill/    Agent skill, user runbooks and future DoEmail CLI contract.
 ```
 
+## 用户如何对接邮箱
+
+邮箱提供标准 IMAP 和 SMTP。Outlook、Apple 邮件、Thunderbird、Foxmail、QQ邮箱和网易邮箱大师都用下面这一套设置，不需要专有协议。用户名填完整邮箱地址。发信必须登录，收信走 IMAP。
+
+### l8ai.cn
+
+| 用途 | 主机 | 端口 | 加密 |
+| --- | --- | --- | --- |
+| 收信 IMAP | `mail.l8ai.cn` | 993 | SSL/TLS |
+| 发信 SMTP | `mail.l8ai.cn` | 587 | STARTTLS |
+| 发信 SMTP | `mail.l8ai.cn` | 465 | SSL/TLS |
+
+使用已经部署在服务器上的正式证书。
+
+### oilan.ai
+
+| 用途 | 主机 | 端口 | 加密 |
+| --- | --- | --- | --- |
+| 收信 IMAP | `mail.oilan.ai` | 993 | SSL/TLS |
+| 发信 SMTP | `mail.oilan.ai` | 587 | STARTTLS |
+| 发信 SMTP | `mail.oilan.ai` | 465 | SSL/TLS |
+
+当前证书是自签名证书，第一次添加账户时要信任该邮件主机。
+
+### 客户端里怎么填
+
+- Outlook：文件 → 添加账户 → 高级设置 → IMAP。收件和发件服务器按上面的主机、端口和加密填写，用户名填完整邮箱地址。
+- Apple 邮件：系统设置或邮件 App 里添加“其他邮件账户”，类型选 IMAP。macOS 和 iOS 使用同一组服务器。
+- Thunderbird：新建账户时选手动配置。IMAP 993 SSL/TLS，SMTP 587 STARTTLS。用户名填完整邮箱地址。
+- Foxmail：其他邮箱 → 手动设置。收件服务器 IMAP，发件服务器 SMTP，端口和加密按上面的表填写。
+- QQ邮箱：添加其他邮箱，协议选 IMAP，不要选 QQ 邮箱自己的账号登录。服务器填本站邮件主机。
+- 网易邮箱大师：添加其他邮箱，选 IMAP。收信 993 SSL/TLS，发信 587 STARTTLS 或 465 SSL/TLS。
+
+新账户由维护者在对应分支开户后，把邮箱地址和密码单独发给用户。开户和发账户的步骤在 `agent.md`。密码不在这份说明里。
+
 ## Documentation Map
 
 Start with the page that matches the task:
@@ -144,6 +179,5 @@ production Kubernetes, DNS, SMTP or mailbox mutations by itself. Execute runtime
 commands only through the selected doagent target, after the target, domain,
 mailbox and approval state are explicit.
 
-Never commit real mailbox passwords, private keys, API keys or tokens. Account
-manifests and generated integration guides must use Secret references or
-environment variables.
+main 不提交邮箱密码。l8ai 和 oilan 两个分支把本站密码写在 `sites/<site>/accounts.json`。
+operation record、账户 manifest 和接入指南仍然不能出现密码字段。维护规则见 `agent.md`。
