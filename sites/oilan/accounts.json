@@ -68,6 +68,24 @@
       "role": "shared",
       "status": "active",
       "password": "support"
+    },
+    {
+      "mailbox": "ai@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "Ab123456"
+    },
+    {
+      "mailbox": "gjq@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "Ab123456"
+    },
+    {
+      "mailbox": "syman@oilan.ai",
+      "role": "user",
+      "status": "active",
+      "password": "Ab123456"
     }
   ]
 }
