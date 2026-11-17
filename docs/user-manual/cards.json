@@ -1,0 +1,333 @@
+{
+  "zh": [
+    {
+      "name": "00-server-settings",
+      "title": "所有邮箱软件都填这一套",
+      "subtitle": "Apple 邮件 · iPhone · Outlook · Thunderbird · Foxmail · QQ 邮箱 · 网易邮箱大师",
+      "rows": [
+        {
+          "label": "收信 IMAP",
+          "value": "mail.oilan.ai",
+          "hint": "端口 993 · SSL/TLS"
+        },
+        {
+          "label": "发信 SMTP",
+          "value": "mail.oilan.ai",
+          "hint": "端口 587 · STARTTLS"
+        },
+        {
+          "label": "也可以",
+          "value": "mail.oilan.ai",
+          "hint": "端口 465 · SSL/TLS"
+        },
+        {
+          "label": "用户名",
+          "value": "完整邮箱地址",
+          "hint": "例如 name@oilan.ai"
+        },
+        {
+          "label": "密码",
+          "value": "维护者单独发给你",
+          "hint": "区分大小写"
+        }
+      ]
+    },
+    {
+      "name": "20-iphone-fields",
+      "title": "iPhone / iPad 填写示例",
+      "subtitle": "设置 → 邮件 → 账户 → 添加账户 → 其他",
+      "rows": [
+        {
+          "label": "姓名",
+          "value": "你自己的名字",
+          "hint": ""
+        },
+        {
+          "label": "电子邮件",
+          "value": "你的完整邮箱",
+          "hint": "例如 name@oilan.ai"
+        },
+        {
+          "label": "密码",
+          "value": "维护者单独发给你",
+          "hint": "区分大小写"
+        },
+        {
+          "label": "收件主机",
+          "value": "mail.oilan.ai",
+          "hint": "用户名填完整邮箱"
+        },
+        {
+          "label": "发件主机",
+          "value": "mail.oilan.ai",
+          "hint": "打开 SMTP 登录验证"
+        }
+      ]
+    },
+    {
+      "name": "30-outlook-fields",
+      "title": "Outlook 填写示例",
+      "subtitle": "文件 → 添加账户 → 高级设置 → IMAP",
+      "rows": [
+        {
+          "label": "电子邮件",
+          "value": "你的完整邮箱",
+          "hint": "不要选 Microsoft 365"
+        },
+        {
+          "label": "收件",
+          "value": "mail.oilan.ai : 993",
+          "hint": "加密 SSL/TLS"
+        },
+        {
+          "label": "发件",
+          "value": "mail.oilan.ai : 587",
+          "hint": "加密 STARTTLS"
+        },
+        {
+          "label": "用户名",
+          "value": "完整邮箱，不是姓名",
+          "hint": "例如 name@oilan.ai"
+        },
+        {
+          "label": "密码",
+          "value": "维护者单独发给你",
+          "hint": "需要 SMTP 登录验证"
+        }
+      ]
+    },
+    {
+      "name": "40-thunderbird-fields",
+      "title": "Thunderbird 填写示例",
+      "subtitle": "账户设置 → 手动配置",
+      "rows": [
+        {
+          "label": "协议",
+          "value": "IMAP",
+          "hint": "不要选 POP"
+        },
+        {
+          "label": "收信主机",
+          "value": "mail.oilan.ai",
+          "hint": "993 · SSL/TLS"
+        },
+        {
+          "label": "发信主机",
+          "value": "mail.oilan.ai",
+          "hint": "587 · STARTTLS"
+        },
+        {
+          "label": "用户名",
+          "value": "完整邮箱地址",
+          "hint": "收信和发信都填"
+        },
+        {
+          "label": "密码",
+          "value": "维护者单独发给你",
+          "hint": "区分大小写"
+        }
+      ]
+    }
+  ],
+  "kk": [
+    {
+      "name": "00-server-settings",
+      "title": "Барлық пошта бағдарламасына бірдей",
+      "subtitle": "Apple Mail · iPhone · Outlook · Thunderbird · Foxmail · QQ · NetEase поштасы",
+      "rows": [
+        {
+          "label": "Кіріс IMAP",
+          "value": "mail.oilan.ai",
+          "hint": "порт 993 · SSL/TLS"
+        },
+        {
+          "label": "Шығыс SMTP",
+          "value": "mail.oilan.ai",
+          "hint": "порт 587 · STARTTLS"
+        },
+        {
+          "label": "Қосымша",
+          "value": "mail.oilan.ai",
+          "hint": "порт 465 · SSL/TLS"
+        },
+        {
+          "label": "Пайдаланушы аты",
+          "value": "Толық пошта мекенжайы",
+          "hint": "мысалы name@oilan.ai"
+        },
+        {
+          "label": "Құпиясөз",
+          "value": "Әкімші жеке жібереді",
+          "hint": "үлкен-кіші әріпке сезімтал"
+        }
+      ]
+    },
+    {
+      "name": "10-mac-providers",
+      "title": "Mac: «Басқа пошта тіркелгісі»",
+      "subtitle": "Пошта → Тіркелгі қосу…",
+      "rows": [
+        {
+          "label": "1-қадам",
+          "value": "Пошта → Тіркелгі қосу…",
+          "hint": "мәзір жолағы"
+        },
+        {
+          "label": "2-қадам",
+          "value": "Тізімнің ең соңы — «Басқа пошта тіркелгісі»",
+          "hint": "«Жалғастыру» батырмасын баспаңыз"
+        },
+        {
+          "label": "Таңдамаңыз",
+          "value": "iCloud, Exchange, Google, Yahoo, 163, 126, QQ",
+          "hint": "бұлар біздің провайдер емес"
+        }
+      ]
+    },
+    {
+      "name": "11-mac-identity",
+      "title": "Mac: аты-жөні, мекенжай, құпиясөз",
+      "subtitle": "Бірінші терезе",
+      "rows": [
+        {
+          "label": "Аты-жөні",
+          "value": "Өз атыңыз",
+          "hint": "алушыға көрінеді"
+        },
+        {
+          "label": "Электрондық пошта",
+          "value": "Толық мекенжай",
+          "hint": "мысалы name@oilan.ai"
+        },
+        {
+          "label": "Құпиясөз",
+          "value": "Әкімші жіберген құпиясөз",
+          "hint": "нүктелермен көрінеді"
+        }
+      ]
+    },
+    {
+      "name": "12-mac-server",
+      "title": "Mac: серверлерді тексеру",
+      "subtitle": "Екінші терезе (тіркелгі түрі — IMAP)",
+      "rows": [
+        {
+          "label": "Пайдаланушы аты",
+          "value": "Толық пошта мекенжайы",
+          "hint": "бос немесе «автоматты» болса, өзгертіңіз"
+        },
+        {
+          "label": "Кіріс сервер",
+          "value": "mail.oilan.ai",
+          "hint": "mail.example.com болмауы керек"
+        },
+        {
+          "label": "Шығыс сервер",
+          "value": "mail.oilan.ai",
+          "hint": "mail.example.com болмауы керек"
+        },
+        {
+          "label": "Қызыл жазу",
+          "value": "Тіркелгі атын немесе құпиясөзді растау мүмкін емес",
+          "hint": "өрістерді түзетіп, «Кіру» батырмасын қайта басыңыз"
+        }
+      ]
+    },
+    {
+      "name": "20-iphone-fields",
+      "title": "iPhone / iPad: өрістер",
+      "subtitle": "Параметрлер → Пошта → Тіркелгілер → Тіркелгі қосу → Басқа",
+      "rows": [
+        {
+          "label": "Аты-жөні",
+          "value": "Өз атыңыз",
+          "hint": ""
+        },
+        {
+          "label": "Электрондық пошта",
+          "value": "Толық мекенжай",
+          "hint": "мысалы name@oilan.ai"
+        },
+        {
+          "label": "Құпиясөз",
+          "value": "Әкімші жібереді",
+          "hint": "үлкен-кіші әріпке сезімтал"
+        },
+        {
+          "label": "Кіріс хост",
+          "value": "mail.oilan.ai",
+          "hint": "пайдаланушы аты — толық мекенжай"
+        },
+        {
+          "label": "Шығыс хост",
+          "value": "mail.oilan.ai",
+          "hint": "SMTP кіруін қосыңыз"
+        }
+      ]
+    },
+    {
+      "name": "30-outlook-fields",
+      "title": "Outlook: өрістер",
+      "subtitle": "Файл → Тіркелгі қосу → Қосымша → IMAP",
+      "rows": [
+        {
+          "label": "Электрондық пошта",
+          "value": "Толық мекенжай",
+          "hint": "Microsoft 365 таңдамаңыз"
+        },
+        {
+          "label": "Кіріс",
+          "value": "mail.oilan.ai : 993",
+          "hint": "шифрлау SSL/TLS"
+        },
+        {
+          "label": "Шығыс",
+          "value": "mail.oilan.ai : 587",
+          "hint": "шифрлау STARTTLS"
+        },
+        {
+          "label": "Пайдаланушы аты",
+          "value": "Толық мекенжай",
+          "hint": "аты-жөні емес"
+        },
+        {
+          "label": "Құпиясөз",
+          "value": "Әкімші жібереді",
+          "hint": "SMTP аутентификациясы қажет"
+        }
+      ]
+    },
+    {
+      "name": "40-thunderbird-fields",
+      "title": "Thunderbird: өрістер",
+      "subtitle": "Тіркелгі параметрлері → Қолмен конфигурациялау",
+      "rows": [
+        {
+          "label": "Хаттама",
+          "value": "IMAP",
+          "hint": "POP таңдамаңыз"
+        },
+        {
+          "label": "Кіріс хост",
+          "value": "mail.oilan.ai",
+          "hint": "993 · SSL/TLS"
+        },
+        {
+          "label": "Шығыс хост",
+          "value": "mail.oilan.ai",
+          "hint": "587 · STARTTLS"
+        },
+        {
+          "label": "Пайдаланушы аты",
+          "value": "Толық мекенжай",
+          "hint": "кіріс және шығыс үшін"
+        },
+        {
+          "label": "Құпиясөз",
+          "value": "Әкімші жібереді",
+          "hint": "үлкен-кіші әріпке сезімтал"
+        }
+      ]
+    }
+  ]
+}

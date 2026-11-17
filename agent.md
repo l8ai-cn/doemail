@@ -39,6 +39,8 @@ node Skill/scripts/doemail.mjs account send --site oilan --mailbox user@oilan.ai
 
 具体主机和端口写在 README 的“用户如何对接邮箱”。用户只收到自己的邮箱地址和密码，不需要进入这个仓库。
 
+`manual.no-mailbox-passwords`：用户手册 docs/user-manual 不得出现邮箱密码，密码只在 sites/<site>/accounts.json，由维护者单独发送。手册里也不列邮箱名单。中文版和哈萨克文版都用 `node docs/user-manual/build.mjs` 重新生成。
+
 ## 部署边界
 
 `deploy.do-not-share-port-25`：l8ai.cn 占用 89.250.81.243 的 25 端口，oilan.ai 占用 89.250.81.242 的 25 端口，两个 release 不能共用同一个外部地址的 25 端口。

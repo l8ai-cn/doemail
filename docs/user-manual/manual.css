@@ -1,0 +1,132 @@
+@page {
+  size: A4;
+  margin: 14mm 14mm 16mm;
+}
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  margin: 0;
+  color: #1d1d1f;
+  font-family: "PingFang SC", "Helvetica Neue", "Hiragino Sans GB", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+  line-height: 1.55;
+}
+
+h1 {
+  font-size: 24pt;
+  line-height: 1.25;
+  margin: 0 0 6px;
+}
+
+h2 {
+  font-size: 16pt;
+  margin: 22px 0 8px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #e3e8ee;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 13pt;
+  margin: 16px 0 6px;
+  page-break-after: avoid;
+}
+
+p {
+  margin: 0 0 9px;
+}
+
+ol,
+ul {
+  margin: 0 0 10px;
+  padding-left: 1.3em;
+}
+
+li {
+  margin: 0 0 5px;
+}
+
+li p {
+  margin: 0 0 4px;
+}
+
+blockquote {
+  margin: 12px 0 16px;
+  padding: 8px 12px;
+  background: #f7f9fb;
+  border-left: 4px solid #1473e6;
+}
+
+blockquote p {
+  margin: 0 0 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 14px;
+  font-size: 10.5pt;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+th,
+td {
+  border: 1px solid #d7dde5;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #f4f6f8;
+  font-weight: 600;
+}
+
+tr {
+  page-break-inside: avoid;
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: #f2f4f7;
+  border-radius: 4px;
+  padding: 1px 4px;
+}
+
+figure {
+  margin: 10px 0 16px;
+  page-break-inside: avoid;
+  text-align: center;
+}
+
+figure img {
+  border: 1px solid #e3e8ee;
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+}
+
+figure img.card {
+  width: 88%;
+}
+
+figure img.shot {
+  width: 48%;
+}
+
+figcaption {
+  color: #5c6570;
+  font-size: 10pt;
+  margin-top: 6px;
+}
+
+.note {
+  color: #5c6570;
+  font-size: 10pt;
+}

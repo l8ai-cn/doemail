@@ -74,6 +74,7 @@ Start with the page that matches the task:
 | Application developer | Connect Java, Python, Node.js or Kubernetes workloads. | `Skill/docs/integration-guide.md` |
 | Automation owner | Configure mailbox-triggered Agent tasks. | `Skill/docs/listeners.md` |
 | On-call operator | Diagnose DNS, runtime, mail or listener failures. | `Skill/docs/troubleshooting.md` |
+| Mailbox user | Set up oilan.ai mail on a computer or phone. | `docs/user-manual/oilan-ai.zh.pdf`, `docs/user-manual/oilan-ai.kk.pdf` |
 
 ## Quick Start
 

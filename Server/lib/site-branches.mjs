@@ -37,6 +37,10 @@ export const MAINTENANCE_RULES = [
     text: "operation record 不得包含 password、passwordHash、token、apiKey 或 privateKey 字段。发送邮件的正文可以包含密码。",
   },
   {
+    id: "manual.no-mailbox-passwords",
+    text: "用户手册 docs/user-manual 不得出现邮箱密码，密码只在 sites/<site>/accounts.json，由维护者单独发送。",
+  },
+  {
     id: "client.standard-imap-smtp",
     text: "用户使用标准 IMAP 993 和 SMTP 587/465 对接，不使用专有协议。",
   },
