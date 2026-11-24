@@ -50,9 +50,68 @@ spec:
     - name: smtp
       port: 25
       targetPort: smtp
+    - name: submission
+      port: 587
+      targetPort: submission
+    - name: smtps
+      port: 465
+      targetPort: smtps
     - name: imaps
       port: 993
       targetPort: imaps
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: l8ai-mail-internal
+  labels:
+    app.kubernetes.io/name: l8ai-mail-internal
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: l8ai-mail
+  ports:
+    - name: relay
+      port: 25
+      targetPort: 2525
+      protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: l8ai-mail-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: l8ai-mail
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: oilan-ai-mail
+      ports:
+        - protocol: TCP
+          port: 2525
+    - ports:
+        - protocol: TCP
+          port: 25
+        - protocol: TCP
+          port: 587
+        - protocol: TCP
+          port: 465
+        - protocol: TCP
+          port: 993
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: l8ai-mail-runtime-config
+data:
+  postfix-main.cf: |
+{{ .Files.Get "config/postfix-main.cf" | indent 4 }}
+  user-patches.sh: |
+{{ .Files.Get "config/user-patches.sh" | indent 4 }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -85,21 +144,23 @@ spec:
             - |
               test -s /accounts/postfix-accounts.cf
               install -m 0600 /accounts/postfix-accounts.cf /config/postfix-accounts.cf
-              install -d -m 0700 /config/ssl
-              if [[ ! -s /config/ssl/mail.l8ai.cn-key.pem || ! -s /config/ssl/mail.l8ai.cn-cert.pem ]]; then
-                openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
-                  -keyout /config/ssl/mail.l8ai.cn-key.pem \
-                  -out /config/ssl/mail.l8ai.cn-cert.pem \
-                  -subj /CN=mail.l8ai.cn \
-                  -addext subjectAltName=DNS:mail.l8ai.cn
-                chmod 0600 /config/ssl/mail.l8ai.cn-key.pem
-              fi
+              test -s /config/opendkim/keys/l8ai.cn/mail.private
+              test -s /mail-tls/tls.crt
+              test -s /mail-tls/tls.key
+              install -m 0644 /runtime-config/postfix-main.cf /config/postfix-main.cf
+              install -m 0755 /runtime-config/user-patches.sh /config/user-patches.sh
           volumeMounts:
             - name: accounts
               mountPath: /accounts
               readOnly: true
             - name: mail-config
               mountPath: /config
+            - name: mail-tls
+              mountPath: /mail-tls
+              readOnly: true
+            - name: runtime-config
+              mountPath: /runtime-config
+              readOnly: true
       containers:
         - name: mailserver
           image: docker.io/mailserver/docker-mailserver@sha256:af51b15dd3fc72153c0e90eb7692bb5e3a463212d87959a80fa7aa89b617d44a
@@ -107,8 +168,14 @@ spec:
           ports:
             - name: smtp
               containerPort: 25
+            - name: submission
+              containerPort: 587
+            - name: smtps
+              containerPort: 465
             - name: imaps
               containerPort: 993
+            - name: relay
+              containerPort: 2525
           env:
             - name: OVERRIDE_HOSTNAME
               value: mail.l8ai.cn
@@ -117,9 +184,9 @@ spec:
             - name: SSL_TYPE
               value: manual
             - name: SSL_CERT_PATH
-              value: /tmp/docker-mailserver/ssl/mail.l8ai.cn-cert.pem
+              value: /mail-tls/tls.crt
             - name: SSL_KEY_PATH
-              value: /tmp/docker-mailserver/ssl/mail.l8ai.cn-key.pem
+              value: /mail-tls/tls.key
             - name: PERMIT_DOCKER
               value: none
             - name: NETWORK_INTERFACE
@@ -139,7 +206,7 @@ spec:
             - name: ENABLE_POSTGREY
               value: "0"
             - name: ENABLE_OPENDKIM
-              value: "0"
+              value: "1"
             - name: ENABLE_OPENDMARC
               value: "0"
             - name: SPOOF_PROTECTION
@@ -160,6 +227,9 @@ spec:
               mountPath: /var/mail-state
             - name: mail-config
               mountPath: /tmp/docker-mailserver
+            - name: mail-tls
+              mountPath: /mail-tls
+              readOnly: true
           startupProbe:
             tcpSocket:
               port: smtp
@@ -188,3 +258,11 @@ spec:
         - name: mail-config
           persistentVolumeClaim:
             claimName: l8ai-mail-config
+        - name: mail-tls
+          secret:
+            secretName: l8ai-wildcard-tls
+            defaultMode: 0400
+        - name: runtime-config
+          configMap:
+            name: l8ai-mail-runtime-config
+            defaultMode: 0444

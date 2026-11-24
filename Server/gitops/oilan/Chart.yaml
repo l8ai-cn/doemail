@@ -1,6 +1,6 @@
 apiVersion: v2
 name: l8ai-mail-oilan
-description: Restore the existing l8ai.cn receiving mailboxes on the current Oilan cluster
+description: Run l8ai.cn mail on the Oilan cluster with submission, TLS, DKIM and an internal relay for oilan.ai
 type: application
-version: 0.1.0
+version: 0.1.2
 appVersion: "15.1.0"
